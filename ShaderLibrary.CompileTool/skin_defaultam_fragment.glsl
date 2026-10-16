@@ -516,7 +516,7 @@ void main()
             }
             temp_105 = fma(fma(fma(temp_73, -0.88, 1.03999996), temp_74, temp_73 * 0.879999995), fma(temp_96 * fp_c4.data[14].z, fp_c7.data[1].w, temp_97), fp_c4.data[15].z) * fp_c7.data[1].y;
             temp_106 = temp_1 < fp_c7.data[11].w && temp_1 > fp_c7.data[11].z && temp_0 < fp_c7.data[11].y && temp_0 > fp_c7.data[11].x;
-            temp_107 = fma(1.0 / ((fp_c7.data[11].w + 0.0 - fp_c7.data[11].z) * 0.5), 0.0 - abs(fma(fp_c7.data[11].w + fp_c7.data[11].z, 0.5, 0.0 - temp_1)) + -0.0, 1) * 0.0 - fma(1.0 / ((fp_c7.data[11].y + 0.0 - fp_c7.data[11].x) * 0.5), 0.0 - abs(fma(fp_c7.data[11].y + fp_c7.data[11].x, 0.5, 0.0 - temp_0)) + -0.0, 1) * temp_104;
+            temp_107 = fma(1.0 / ((fp_c7.data[11].w + 0.0 - fp_c7.data[11].z) * 0.5), 0.0 - abs(fma(fp_c7.data[11].w + fp_c7.data[11].z, 0.5, 0.0 - temp_1)) + -0.0, 1) * (-fma(1.0 / ((fp_c7.data[11].y + 0.0 - fp_c7.data[11].x) * 0.5), 0.0 - abs(fma(fp_c7.data[11].y + fp_c7.data[11].x, 0.5, 0.0 - temp_0)) + -0.0, 1) * temp_104);
             temp_108 = fma(fma(fma(temp_71, -0.9, 1.03999996), temp_74, temp_71 * 0.899999976), fma(temp_94 * fp_c4.data[14].x, fp_c7.data[1].w, temp_97), fp_c4.data[15].x) * fp_c7.data[1].y;
             temp_109 = fma(temp_108, temp_107, temp_108);
             temp_110 = fma(temp_99, temp_107, temp_99);
@@ -568,12 +568,13 @@ void main()
         else
         {
             temp_132 = fma(temp_59, temp_23, fma(temp_58, temp_22, temp_57 * temp_21));
-            temp_133 = fma(temp_132 * 0.0 - temp_21, 2.0, temp_57);
-            temp_134 = fma(temp_132 * 0.0 - temp_22, 2.0, temp_58);
-            temp_135 = fma(temp_132 * 0.0 - temp_23, 2.0, temp_59);
-            temp_136 = fma(temp_135, 0.0 - fp_c4.data[43].z, fma(temp_134, 0.0 - fp_c4.data[43].y, temp_133 * 0.0 - fp_c4.data[43].x));
-            temp_137 = fma(temp_135, 0.0 - fp_c4.data[42].z, fma(temp_134, 0.0 - fp_c4.data[42].y, temp_133 * 0.0 - fp_c4.data[42].x));
-            temp_138 = fma(temp_135, 0.0 - fp_c4.data[44].z, fma(temp_134, 0.0 - fp_c4.data[44].y, temp_133 * 0.0 - fp_c4.data[44].x));
+            // restore reflection vector (part 2)
+            temp_133 = fma(temp_132 * (-temp_21), 2.0, temp_57);
+            temp_134 = fma(temp_132 * (-temp_22), 2.0, temp_58);
+            temp_135 = fma(temp_132 * (-temp_23), 2.0, temp_59);
+            temp_136 = fma(temp_135, -fp_c4.data[43].z, fma(temp_134, -fp_c4.data[43].y, temp_133 * (-fp_c4.data[43].x)));
+            temp_137 = fma(temp_135, -fp_c4.data[42].z, fma(temp_134, -fp_c4.data[42].y, temp_133 * (-fp_c4.data[42].x)));
+            temp_138 = fma(temp_135, -fp_c4.data[44].z, fma(temp_134, -fp_c4.data[44].y, temp_133 * (-fp_c4.data[44].x)));
             temp_139 = 1.0 / max(abs(temp_138), max(abs(temp_136), abs(temp_137)));
             temp_140 = temp_138 * temp_139;
             temp_141 = temp_137 * temp_139;

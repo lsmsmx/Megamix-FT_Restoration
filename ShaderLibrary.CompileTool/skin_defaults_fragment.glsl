@@ -330,14 +330,15 @@ void main()
     }
     temp_51 = inversesqrt(fma(temp_43, temp_43, fma(temp_44, temp_44, temp_42 * temp_42)));
     temp_52 = fma(temp_35, temp_18, fma(temp_34, temp_17, temp_33 * temp_16));
-    temp_53 = fma(temp_52 * 0.0 - temp_16, 2.0, temp_33);
-    temp_54 = fma(temp_52 * 0.0 - temp_18, 2.0, temp_35);
-    temp_55 = fma(temp_52 * 0.0 - temp_17, 2.0, temp_34);
+    // restore reflection vector (part 1)
+    temp_53 = fma(temp_52 * (-temp_16), 2.0, temp_33);
+    temp_54 = fma(temp_52 * (-temp_18), 2.0, temp_35);
+    temp_55 = fma(temp_52 * (-temp_17), 2.0, temp_34);
     temp_56 = clamp(0.0 - fma(temp_40, temp_43 * temp_51, fma(temp_41, temp_44 * temp_51, temp_37 * temp_42 * temp_51)) + 1.0, 0.0, 1.0);
     temp_57 = temp_56 * temp_56;
-    temp_58 = fma(temp_54, 0.0 - fp_c4.data[44].z, fma(temp_55, 0.0 - fp_c4.data[44].y, temp_53 * 0.0 - fp_c4.data[44].x));
-    temp_59 = fma(temp_54, 0.0 - fp_c4.data[43].z, fma(temp_55, 0.0 - fp_c4.data[43].y, temp_53 * 0.0 - fp_c4.data[43].x));
-    temp_60 = fma(temp_54, 0.0 - fp_c4.data[42].z, fma(temp_55, 0.0 - fp_c4.data[42].y, temp_53 * 0.0 - fp_c4.data[42].x));
+    temp_58 = fma(temp_54, -fp_c4.data[44].z, fma(temp_55, -fp_c4.data[44].y, temp_53 * (-fp_c4.data[44].x)));
+    temp_59 = fma(temp_54, -fp_c4.data[43].z, fma(temp_55, -fp_c4.data[43].y, temp_53 * (-fp_c4.data[43].x)));
+    temp_60 = fma(temp_54, -fp_c4.data[42].z, fma(temp_55, -fp_c4.data[42].y, temp_53 * (-fp_c4.data[42].x)));
     temp_61 = temp_57;
     temp_62 = temp_50;
     if (temp_24)
@@ -501,7 +502,7 @@ void main()
         temp_114 = temp_3 < fp_c7.data[11].w && temp_3 > fp_c7.data[11].z && temp_2 < fp_c7.data[11].y && temp_2 > fp_c7.data[11].x;
         temp_115 = fma(fma(fma(temp_80, -0.9, 1.03999996), temp_83, temp_80 * 0.899999976), fma(temp_106 * fp_c4.data[14].x, fp_c7.data[1].w, temp_109), fp_c4.data[15].x) * fp_c7.data[1].y;
         temp_116 = fma(fma(fma(temp_82, -0.88, 1.03999996), temp_83, temp_82 * 0.879999995), fma(temp_108 * fp_c4.data[14].z, fp_c7.data[1].w, temp_109), fp_c4.data[15].z) * fp_c7.data[1].y;
-        temp_117 = fma(1.0 / ((0.0 - fp_c7.data[11].z + fp_c7.data[11].w) * 0.5), 0.0 - abs(fma(fp_c7.data[11].z + fp_c7.data[11].w, 0.5, 0.0 - temp_3)) + -0.0, 1) * 0.0 - fma(1.0 / ((0.0 - fp_c7.data[11].x + fp_c7.data[11].y) * 0.5), 0.0 - abs(fma(fp_c7.data[11].x + fp_c7.data[11].y, 0.5, 0.0 - temp_2)) + -0.0, 1) * temp_113;
+        temp_117 = fma(1.0 / ((0.0 - fp_c7.data[11].z + fp_c7.data[11].w) * 0.5), 0.0 - abs(fma(fp_c7.data[11].z + fp_c7.data[11].w, 0.5, 0.0 - temp_3)) + -0.0, 1) * (-fma(1.0 / ((0.0 - fp_c7.data[11].x + fp_c7.data[11].y) * 0.5), 0.0 - abs(fma(fp_c7.data[11].x + fp_c7.data[11].y, 0.5, 0.0 - temp_2)) + -0.0, 1) * temp_113);
         temp_118 = fma(fma(fma(temp_81, -0.77, 1.03999996), temp_83, temp_81 * 0.769999981), fma(temp_107 * fp_c4.data[14].y, fp_c7.data[1].w, temp_109), fp_c4.data[15].y) * fp_c7.data[1].y;
         temp_119 = fma(temp_115, temp_117, temp_115);
         temp_120 = fma(temp_118, temp_117, temp_118);

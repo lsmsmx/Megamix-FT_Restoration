@@ -486,16 +486,10 @@ void main() {
                 }
 
                 // restore correctly blended cubemap; supposedly fix red eyes and less dark shadow, by not letting it get junky;
-                temp_91 = temp_85;
-                temp_52 = temp_84;
-                temp_53 = temp_83;
-
+                // fix skin ramp and SSS curvature registers without glow artifact
                 temp_114 = clamp((fma(fma(temp_13, fp_c4.data[33].z, fma(temp_12, fp_c4.data[33].y, temp_11 * fp_c4.data[33].x)), 0.5, 0.0 - fp_c4.data[36].x) + 0.5) * fp_c4.data[36].y, 0.0, 1.0);
                 temp_115 = fp_c4.data[14].x;
                 temp_116 = fp_c4.data[34].y;
-                temp_117 = temp_52;
-                temp_118 = temp_53;
-                temp_119 = temp_91;
                 if(temp_86) {
                     temp_92 = fma(temp_83, fp_c4.data[14].z, fp_c4.data[15].z);
                 }
@@ -518,58 +512,37 @@ void main() {
                 if(!temp_86) {
                     temp_123 = temp_85;
                 }
-                temp_124 = temp_48 > 0.99;
-                if(temp_88) {
-                    temp_117 = fma(fma(0.0 - fp_c4.data[34].y + fp_c4.data[35].y, temp_114, fp_c4.data[34].y), fp_c4.data[36].z, 0.0);
-                } else {
-                    temp_117 = 0.0; // green, prevent from glow
-                }
-                temp_125 = fma(fma(0.0 - fp_c4.data[34].x + fp_c4.data[35].x, temp_114, fp_c4.data[34].x), fp_c4.data[36].z, 0.0);
-                temp_126 = floatBitsToInt(temp_125);
-                if(temp_88) {
-                    temp_118 = fma(fma(0.0 - fp_c4.data[34].z + fp_c4.data[35].z, temp_114, fp_c4.data[34].z), fp_c4.data[36].z, 0.0);
-                } else {
-                    temp_118 = 0.0; // blue,prevent from glow
-                }
+
                 temp_127 = fma(temp_89, fp_c4.data[28].z, temp_120) + temp_87;
                 temp_128 = fma(temp_89 * fp_c4.data[28].y, 0.9, temp_121) + temp_87;
                 temp_129 = fma(temp_89, fp_c4.data[28].x, temp_123) + temp_87;
-                if(temp_6) {
-                    temp_122 = temp_23;
-                }
-                temp_130 = temp_122;
+
+                temp_124 = temp_48 > 0.99;
                 if(temp_88) {
-                    temp_119 = temp_125;
+                    temp_117 = fma(fma(0.0 - fp_c4.data[34].y + fp_c4.data[35].y, temp_114, fp_c4.data[34].y), fp_c4.data[36].z, 0.0);
+                    temp_119 = fma(fma(0.0 - fp_c4.data[34].x + fp_c4.data[35].x, temp_114, fp_c4.data[34].x), fp_c4.data[36].z, 0.0);
+                    temp_118 = fma(fma(0.0 - fp_c4.data[34].z + fp_c4.data[35].z, temp_114, fp_c4.data[34].z), fp_c4.data[36].z, 0.0);
                 } else {
-                    temp_119 = 0.0; // red, prevent from glow
-                }
-                if(temp_6) {
-                    temp_126 = temp_24;
-                }
-                temp_131 = floatBitsToInt(temp_127 + temp_118);
-                temp_132 = floatBitsToInt(temp_128 + temp_117);
-                temp_133 = temp_126;
-                if(!temp_124) {
-                    temp_131 = floatBitsToInt(temp_127);
-                }
-                if(!temp_124) {
-                    temp_132 = floatBitsToInt(temp_128);
-                }
-                temp_134 = floatBitsToInt(temp_129 + temp_119);
-                if(!temp_124) {
-                    temp_134 = floatBitsToInt(temp_129);
-                }
-                if(!temp_6) {
-                    temp_130 = temp_131;
-                }
-                if(!temp_6) {
-                    temp_133 = temp_132;
+                    temp_117 = 0.0;
+                    temp_119 = 0.0;
+                    temp_118 = 0.0;
                 }
 
-                SV_Target0.x = intBitsToFloat(temp_134);
-                SV_Target0.y = intBitsToFloat(temp_133);
-                SV_Target0.z = intBitsToFloat(temp_130);
-                SV_Target0.w = 1.0;
+                float final_r = temp_129 + (temp_124 ? temp_119 : 0.0);
+                float final_g = temp_128 + (temp_124 ? temp_117 : 0.0);
+                float final_b = temp_127 + (temp_124 ? temp_118 : 0.0);
+
+                if (temp_6) {
+                    SV_Target0.x = final_r;
+                    SV_Target0.y = intBitsToFloat(temp_24);
+                    SV_Target0.z = intBitsToFloat(temp_23);
+                    SV_Target0.w = 1.0;
+                } else {
+                    SV_Target0.x = final_r;
+                    SV_Target0.y = final_g;
+                    SV_Target0.z = final_b;
+                    SV_Target0.w = 1.0;
+                }
                 //return; This causes crash on yuzu;
             }
         }
